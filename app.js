@@ -11,7 +11,6 @@ app.use(bodyParser.json);
 app.use(bodyParser.urlencoded({
     extended: true;
 }));
-
 routes(app);
 
 //Iniciar el servidor
