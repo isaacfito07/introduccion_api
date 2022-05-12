@@ -7,9 +7,9 @@ const routes = require('./routes/routes');
 const app = express();
 
 // Usar Node.JS body parsing middleware
-app.use(bodyParser.json);
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true;
+    extended: true,
 }));
 routes(app);
 
