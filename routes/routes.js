@@ -1,4 +1,4 @@
-// cargue la conexion del grupo MySQL
+// cargue la conexion del grupo MSSQL
 const pool=require('../data/config');
 
 // Ruta de la app
@@ -14,7 +14,7 @@ const router = app => {
         pool.query('SELECT * FROM users', (error, result) =>{
             if (error) throw error;
             
-            response.send(result);
+            response.send(result.recordset);
         });
    });
    //Mostrar un solo usuario por ID
