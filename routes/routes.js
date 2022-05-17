@@ -29,7 +29,7 @@ const router = app => {
    });
    // Agregar un nuevo usuario
    app.post ('/users', (request, response) => {
-        const {nombre, apellido}=request.body;
+        const {nombre, apellido}=request.body[0];
         pool.query(`INSERT INTO users VALUES('${nombre}','${apellido}')`, (error, result) => {
            if (error) throw error;
 
@@ -40,7 +40,7 @@ const router = app => {
    //Actualizar un usuario existente
    app.put('/users/:id', (request, response) =>{
        const {id}= request.params;
-       const {nombre, apellido}=request.body;
+       const {nombre, apellido}=request.body[0];
 
        pool.query(`UPDATE users SET nombre = '${nombre}', apellido = '${apellido}' WHERE id = ${id}`, (error, result) =>{
             if(error) throw error;
