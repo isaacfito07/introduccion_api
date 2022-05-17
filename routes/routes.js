@@ -19,28 +19,30 @@ const router = app => {
    });
    //Mostrar un solo usuario por ID
    app.get('/users/:id', (request, response) => {
-       const id = request.params.id;
+       const {id} = request.params;
 
-       pool.query('SELECT * FROM users WHERE id=?', id, (error, result) => {
+       pool.query(`SELECT * FROM users WHERE id=${id}`, (error, result) => {
            if (error) throw error;
 
-           response.send(result);
+           response.send(result.recordset);
        });
    });
    // Agregar un nuevo usuario
    app.post ('/users', (request, response) => {
-       pool.query('INSERT INTO users SET ?', request.body, (error, result) => {
+        const {nombre, apellido}=request.body;
+        pool.query(`INSERT INTO users VALUES('${nombre}','${apellido}')`, (error, result) => {
            if (error) throw error;
 
-           response.status(201).send(`User added with ID: ${result.insertId}`);
+           response.status(201).send(`User added!!!`);
        });
    });
 
    //Actualizar un usuario existente
    app.put('/users/:id', (request, response) =>{
-       const id= request.params.id;
+       const {id}= request.params;
+       const {nombre, apellido}=request.body;
 
-       pool.query('UPDATE users SET ? WHERE id = ?', [request.body, id], (error, result) =>{
+       pool.query(`UPDATE users SET nombre = '${nombre}', apellido = '${apellido}' WHERE id = ${id}`, (error, result) =>{
             if(error) throw error;
 
             response.send('User updated Successfully.');
@@ -49,9 +51,9 @@ const router = app => {
 
    //Eliminar un usuario
    app.delete('/users/:id', (request, response) =>{
-       const id= request.params.id;
+       const {id}= request.params;
 
-       pool.query('DELETE FROM users WHERE id = ?', id, (error, result) => {
+       pool.query(`DELETE FROM users WHERE id = ${id}`, (error, result) => {
            if (error) throw error;
            response.send('User deleted.');
        });
